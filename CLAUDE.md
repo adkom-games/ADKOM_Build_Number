@@ -12,7 +12,7 @@ and exposes a static interface for retrieving the current value at runtime.
 
 ```
 package.json  README.md  CHANGELOG.md  LICENSE.md   <- package manifest & docs (repo root)
-Runtime/   ADKOM.BuildNumber.asmdef + BuildNumberData.cs
+Runtime/   ADKOM.BuildNumber.asmdef + BuildNumber.cs
 Editor/    ADKOM.BuildNumber.Editor.asmdef + BuildNumberAutoIncrement.cs
 Dev~/      Unity test project (embeds the package via "file:../.."; the trailing
            "~" hides it from Unity's package importer). Open THIS in Unity to test.
@@ -25,37 +25,37 @@ Dev~/      Unity test project (embeds the package via "file:../.."; the trailing
 
 ## How it works
 
-- **`BuildNumberData`** (`Runtime/BuildNumberData.cs`) — a `ScriptableObject`
-  holding a single serialized `int buildNumber`. The concrete asset is created in
-  the *consuming* project at `Assets/Settings/Resources/BuildNumberData.asset` so it
-  loads via `Resources.Load` in the Editor, in Play mode, and in built players.
+- **`BuildNumber`** (`Runtime/BuildNumber.cs`) — a static class; the **single**
+  public entry point. Reads the number via `Resources.Load<TextAsset>` and caches it.
+  `ResourceName` (`"BuildNumber"`) is the shared source of truth for the asset name.
 - **`BuildNumberAutoIncrement`** (`Editor/BuildNumberAutoIncrement.cs`) —
   `[InitializeOnLoad]` editor class that hooks `CompilationPipeline.compilationFinished`
-  and calls `Increment()` after each *successful* compilation (skips when
-  `scriptCompilationFailed`). Creates the asset (and its Resources folder) on first run.
+  and, after each *successful* compilation (skips when `scriptCompilationFailed`),
+  reads the current value, increments, and writes it back. Creates the file (and its
+  Resources folder) on first run.
+- Storage is a **plain-text file** in the *consuming* project at
+  `Assets/Settings/Resources/BuildNumber.txt` — it just contains the integer. Chosen
+  over a ScriptableObject `.asset` so it's always text (never binary, never LFS)
+  regardless of the consumer's serialization mode.
 
 ## Public interface
 
-Runtime code should use the static accessors on `BuildNumberData`:
+**One API, on purpose** — do not add parallel accessors:
 
 ```csharp
-int build = ADKOM.BuildNumberData.CurrentBuildNumber;   // 0 if asset missing
-ADKOM.BuildNumberData instance = ADKOM.BuildNumberData.GetCurrent(); // cached, may be null
+int build = ADKOM.BuildNumber.Current;   // 0 if the file doesn't exist yet
 ```
 
-- `BuildNumberData.CurrentBuildNumber` — the value, or `0` if no asset is found. Use this.
-- `BuildNumberData.GetCurrent()` — cached asset instance (or `null`), Editor + player.
-- `BuildNumberAutoIncrement.GetBuildNumber()` — **Editor-only** accessor via
-  `AssetDatabase`. Do not use from runtime code; prefer `CurrentBuildNumber`.
+- `BuildNumber.Current` — the value, or `0` if not created yet. Editor + player.
 - `BuildNumberAutoIncrement.VerboseLogging` — `EditorPrefs`-backed toggle for
-  `[ADKOM]` increment/creation log messages.
+  `[ADKOM]` increment log messages (editor-only, not part of the read API).
 
 ## Conventions & gotchas
 
-- The `.asset` is the source of truth for the number; it lives in the *consumer's*
+- The `.txt` file is the source of truth for the number; it lives in the *consumer's*
   project (or `Dev~/` here), changes on every compile, and belongs to that project —
   not the package.
 - Runtime asmdef must stay free of editor references — `AssetDatabase`/`UnityEditor`
   usage belongs only in the `.Editor` asmdef.
-- Keep the runtime accessor null-safe (asset may be absent in a fresh clone until the
-  first compile regenerates it).
+- `BuildNumber.Current` caches in a static field; that's safe because a domain reload
+  (which clears it) coincides with the recompile that changes the value.
