@@ -1,0 +1,26 @@
+# Repo root == the UPM package. The Unity test project lives in Dev~/ and has
+# its own Unity .gitignore. These entries cover repo-level and stray artifacts.
+
+# Stale Unity artifacts that may remain at the repo root from earlier layouts.
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Ll]ogs/
+/[Bb]uild/
+/[Bb]uilds/
+/[Uu]ser[Ss]ettings/
+
+# Generated IDE/solution files
+*.csproj
+*.sln
+*.slnx
+*.user
+*.suo
+
+# Editor / OS cruft
+.vs/
+.idea/
+*.tmp
+*.log
+.DS_Store
+Thumbs.db

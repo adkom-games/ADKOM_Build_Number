@@ -1,0 +1,20 @@
+{
+  "name": "com.adkom.buildnumber",
+  "version": "1.0.0",
+  "displayName": "ADKOM Build Number",
+  "description": "Automatically increments a project-static build number after each successful script compilation, and exposes a static runtime API for reading the current build number in the Editor, in Play mode, and in built players.",
+  "unity": "2021.3",
+  "author": {
+    "name": "A Different Kind Of Mind Games",
+    "url": "https://github.com/adkom-games"
+  },
+  "keywords": [
+    "build",
+    "buildnumber",
+    "version",
+    "versioning",
+    "editor",
+    "automation"
+  ],
+  "license": "MIT"
+}
