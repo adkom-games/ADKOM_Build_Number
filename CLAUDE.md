@@ -14,14 +14,18 @@ and exposes a static interface for retrieving the current value at runtime.
 package.json  README.md  CHANGELOG.md  LICENSE.md   <- package manifest & docs (repo root)
 Runtime/   ADKOM.BuildNumber.asmdef + BuildNumber.cs
 Editor/    ADKOM.BuildNumber.Editor.asmdef + BuildNumberAutoIncrement.cs
-Dev~/      Unity test project (embeds the package via "file:../.."; the trailing
-           "~" hides it from Unity's package importer). Open THIS in Unity to test.
+Dev~/      Minimal Unity test project (built-in render pipeline, legacy input, no
+           URP/Input System/etc). Embeds the package via "file:../.."; the trailing
+           "~" hides it from Unity's package importer. Open THIS in Unity to test.
 ```
 
 - The package source lives at the repo root; **do not** move it back under a
   Unity project's `Assets/`.
 - To develop/test: open `Dev~/` as a Unity project. Its `Packages/manifest.json`
   references the package with `"com.adkom.buildnumber": "file:../.."`.
+- The package has **no dependencies** (`package.json`), and `Dev~/` is kept minimal
+  on purpose (built-in pipeline, legacy input). Don't re-add URP / Input System /
+  other feature packages unless a test genuinely needs them.
 
 ## How it works
 
