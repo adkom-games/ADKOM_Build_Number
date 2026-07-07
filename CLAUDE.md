@@ -14,16 +14,18 @@ and exposes a static interface for retrieving the current value at runtime.
 package.json  README.md  CHANGELOG.md  LICENSE.md   <- package manifest & docs (repo root)
 Runtime/   ADKOM.BuildNumber.asmdef + BuildNumber.cs
 Editor/    ADKOM.BuildNumber.Editor.asmdef + BuildNumberAutoIncrement.cs
-Dev~/      Minimal Unity test project (built-in render pipeline, legacy input, no
-           URP/Input System/etc). Embeds the package via "file:../.."; the trailing
-           "~" hides it from Unity's package importer. Open THIS in Unity to test.
+ADKOM_Build_Number_Dev~/   Minimal Unity test project (built-in render pipeline,
+           legacy input, no URP/Input System/etc). Embeds the package via
+           "file:../.."; the trailing "~" hides it from Unity's package importer.
+           Add THIS folder to Unity Hub to test.
 ```
 
 - The package source lives at the repo root; **do not** move it back under a
   Unity project's `Assets/`.
-- To develop/test: open `Dev~/` as a Unity project. Its `Packages/manifest.json`
-  references the package with `"com.adkom.buildnumber": "file:../.."`.
-- The package has **no dependencies** (`package.json`), and `Dev~/` is kept minimal
+- To develop/test: add `ADKOM_Build_Number_Dev~/` to Unity Hub. Its
+  `Packages/manifest.json` references the package with
+  `"com.adkom.buildnumber": "file:../.."`.
+- The package has **no dependencies** (`package.json`), and the dev project is kept minimal
   on purpose (built-in pipeline, legacy input). Don't re-add URP / Input System /
   other feature packages unless a test genuinely needs them.
 
@@ -57,7 +59,7 @@ int build = ADKOM.BuildNumber.Current;   // 0 if the file doesn't exist yet
 ## Conventions & gotchas
 
 - The `.txt` file is the source of truth for the number; it lives in the *consumer's*
-  project (or `Dev~/` here), changes on every compile, and belongs to that project —
+  project (or `ADKOM_Build_Number_Dev~/` here), changes on every compile, and belongs to that project —
   not the package.
 - Runtime asmdef must stay free of editor references — `AssetDatabase`/`UnityEditor`
   usage belongs only in the `.Editor` asmdef.
