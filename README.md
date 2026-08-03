@@ -1,8 +1,18 @@
 # ADKOM Build Number
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)
+[![Unity](https://img.shields.io/badge/Unity-2021.3%2B-black.svg?logo=unity)](https://unity.com)
+[![UPM](https://img.shields.io/badge/UPM-com.adkom.buildnumber-blue.svg)](#installation)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-support-ff5e5b.svg?logo=kofi&logoColor=white)](https://ko-fi.com/adkomgames)
+
 Automatically increments a project-static build number after each successful
 script compilation, and exposes a simple static API for reading the current
 build number at runtime.
+
+A tiny, zero-dependency Unity package that does one thing correctly: the number
+lives as plain text in **your** project (no Git LFS, serialization-mode
+agnostic), each project keeps its own independent counter, and one line of code
+reads it anywhere — Editor, Play mode, or built players.
 
 ## Installation
 
@@ -10,7 +20,7 @@ In Unity, open **Window → Package Manager → + → Install package from git U
 and enter:
 
 ```
-https://github.com/adkom-games/ADKOM_Build_Number.git
+https://github.com/adkom-games/ADKOM_Build_Number.git#1.1.0
 ```
 
 Or add it directly to `Packages/manifest.json`:
@@ -18,12 +28,13 @@ Or add it directly to `Packages/manifest.json`:
 ```json
 {
   "dependencies": {
-    "com.adkom.buildnumber": "https://github.com/adkom-games/ADKOM_Build_Number.git"
+    "com.adkom.buildnumber": "https://github.com/adkom-games/ADKOM_Build_Number.git#1.1.0"
   }
 }
 ```
 
-To pin a version, append `#1.0.0` (a git tag) to the URL.
+The `#1.1.0` suffix pins the install to that git tag for reproducible builds; drop
+it to track the default branch tip.
 
 ## Usage
 
@@ -64,6 +75,22 @@ toggle) to log each increment to the Console.
 ## Requirements
 
 Unity 2021.3 or newer.
+
+## More from ADKOM
+
+Made by [A Different Kind Of Mind Games](https://www.adkomgames.com) — a small
+studio building video games, and the tools that make building them nicer.
+Everything we publish is MIT licensed and installable straight from GitHub.
+
+- [ADKOM Text Editor](https://github.com/adkom-games/ADKOM_TextEditor) — a real
+  IDE-grade code editor living inside the Unity Editor
+- [ADKOM Inifile](https://github.com/adkom-games/ADKOM_Inifile) — dependency-free
+  INI reader + self-documenting INI generator
+- [ADKOM Localization](https://github.com/adkom-games/ADKOM_Localization) —
+  lightweight UI Toolkit localization with automatic RTL mirroring
+
+If a tool saves you time, a coffee is always appreciated —
+[ko-fi.com/adkomgames](https://ko-fi.com/adkomgames) — but the code is free, forever.
 
 ## License
 
