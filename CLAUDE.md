@@ -13,7 +13,7 @@ and exposes a static interface for retrieving the current value at runtime.
 ```
 package.json  README.md  CHANGELOG.md  LICENSE.md   <- package manifest & docs (repo root)
 Runtime/   ADKOM.BuildNumber.asmdef + BuildNumber.cs
-Editor/    ADKOM.BuildNumber.Editor.asmdef + BuildNumberAutoIncrement.cs
+Editor/    ADKOM.BuildNumber.Editor.asmdef + BuildNumberAutoIncrement.cs + BuildNumberMenu.cs
 ADKOM_Build_Number_Dev~/   Minimal Unity test project (built-in render pipeline,
            legacy input, no URP/Input System/etc). Embeds the package via
            "file:../.."; the trailing "~" hides it from Unity's package importer.
@@ -39,6 +39,12 @@ ADKOM_Build_Number_Dev~/   Minimal Unity test project (built-in render pipeline,
   and, after each *successful* compilation (skips when `scriptCompilationFailed`),
   reads the current value, increments, and writes it back. Creates the file (and its
   Resources folder) on first run.
+- **`BuildNumberMenu`** (`Editor/BuildNumberMenu.cs`) — internal `[InitializeOnLoad]`
+  class providing the **Tools > ADKOM Build Number** menu: a disabled
+  "Current Build Number N" display item (registered via reflection on Unity's
+  internal `Menu.AddMenuItem`, since `[MenuItem]` labels are compile-time constants;
+  re-registered each domain reload and after manual changes), plus
+  Increment/Decrement commands (decrement clamps at 0 and is disabled at 0).
 - Storage is a **plain-text file** in the *consuming* project at
   `Assets/Settings/Resources/BuildNumber.txt` — it just contains the integer. Chosen
   over a ScriptableObject `.asset` so it's always text (never binary, never LFS)

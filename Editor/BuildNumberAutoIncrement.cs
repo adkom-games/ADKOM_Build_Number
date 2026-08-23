@@ -47,7 +47,8 @@ namespace ADKOM
                 Debug.Log($"[ADKOM] Build number incremented to {next}");
         }
 
-        private static int ReadCurrent()
+        /// <summary>Reads the current value from the backing file, or 0 if absent.</summary>
+        internal static int ReadCurrent()
         {
             if (File.Exists(AssetPath) &&
                 int.TryParse(File.ReadAllText(AssetPath).Trim(), out int value))
@@ -58,7 +59,8 @@ namespace ADKOM
             return 0;
         }
 
-        private static void Write(int value)
+        /// <summary>Writes the value to the backing file, creating it if needed.</summary>
+        internal static void Write(int value)
         {
             string directory = Path.GetDirectoryName(AssetPath);
             if (!Directory.Exists(directory))

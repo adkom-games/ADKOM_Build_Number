@@ -5,6 +5,14 @@ All notable changes to this package are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-08-23
+
+### Added
+- **Tools > ADKOM Build Number** editor menu:
+  - **Current Build Number N** — disabled display item showing the live value.
+  - **Increment Build Number** / **Decrement Build Number** — manually adjust the
+    stored number (decrement is clamped at 0 and disabled when already 0).
+
 ## [1.1.0] - 2026-07-07
 
 ### Changed

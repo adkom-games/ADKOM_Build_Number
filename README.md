@@ -20,7 +20,7 @@ In Unity, open **Window → Package Manager → + → Install package from git U
 and enter:
 
 ```
-https://github.com/adkom-games/ADKOM_Build_Number.git#1.1.0
+https://github.com/adkom-games/ADKOM_Build_Number.git#1.2.0
 ```
 
 Or add it directly to `Packages/manifest.json`:
@@ -28,12 +28,12 @@ Or add it directly to `Packages/manifest.json`:
 ```json
 {
   "dependencies": {
-    "com.adkom.buildnumber": "https://github.com/adkom-games/ADKOM_Build_Number.git#1.1.0"
+    "com.adkom.buildnumber": "https://github.com/adkom-games/ADKOM_Build_Number.git#1.2.0"
   }
 }
 ```
 
-The `#1.1.0` suffix pins the install to that git tag for reproducible builds; drop
+The `#1.2.0` suffix pins the install to that git tag for reproducible builds; drop
 it to track the default branch tip.
 
 ## Usage
@@ -66,6 +66,16 @@ public surface.
 - Because the file lives in the consuming project (not the package), each project
   keeps its own independent build counter, and it will change on every compile —
   expect it to show up frequently in source control.
+
+### Editor menu
+
+**Tools → ADKOM Build Number** shows the current value and lets you adjust it
+manually:
+
+- **Current Build Number N** — display only (always disabled).
+- **Increment Build Number** — adds 1 to the stored number.
+- **Decrement Build Number** — subtracts 1; clamped at 0 and disabled when the
+  number is already 0.
 
 ### Verbose logging
 

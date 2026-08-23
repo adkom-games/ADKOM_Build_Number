@@ -1,6 +1,6 @@
 {
   "name": "com.adkom.buildnumber",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "displayName": "ADKOM Build Number",
   "description": "Automatically increments a project-static build number after each successful script compilation, and exposes a static runtime API for reading the current build number in the Editor, in Play mode, and in built players.",
   "unity": "2021.3",
